@@ -127,24 +127,31 @@ Four figures in a **void-black deep-space tactical aesthetic** — phosphor cyan
 
 ---
 
-## Quick Start
-
-```bash
-# 1. Clone
+# 1. Clone repository
 git clone https://github.com/tanu-1403/astrashield.git
 cd astrashield
 
-# 2. Install
+# 2. Create virtual environment (recommended)
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Linux/Mac
+
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# 3. Run full analysis pipeline
-python main.py
+# 4. Run full analysis pipeline
+python -m bootstrap.main
 
-# 4. Start REST API server
-python api/server.py
-# → http://localhost:8000
+# 5. Start REST API server
+python -m api.server
 
-# 5. Run tests
+# Open in browser
+http://localhost:8000/api/status
+
+(Optional) Start Streamlit Dashboard
+streamlit run app.py
+
+# 6. Run tests
 pip install pytest
 pytest tests/ -v
 ```

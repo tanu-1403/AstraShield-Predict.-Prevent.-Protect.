@@ -19,3 +19,6 @@ pydantic>=2.4.0
 
 # HTTP client (for health checks and tests)
 httpx>=0.25.0
+
+#Streamlit
+streamlit>=1.32.0
