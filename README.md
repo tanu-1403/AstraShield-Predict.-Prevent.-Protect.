@@ -131,7 +131,7 @@ Four figures in a **void-black deep-space tactical aesthetic** — phosphor cyan
 
 ```bash
 # 1. Clone
-git clone https://github.com/your-team/astrashield.git
+git clone https://github.com/tanu-1403/astrashield.git
 cd astrashield
 
 # 2. Install
