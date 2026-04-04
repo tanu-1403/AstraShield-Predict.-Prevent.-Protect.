@@ -258,12 +258,80 @@ else:
     def status():
         n_sats = sum(1 for o in STATE.objects.values() if o["type"]=="SATELLITE")
         n_debs = sum(1 for o in STATE.objects.values() if o["type"]=="DEBRIS")
+
         return {
-            "system": "AstraShield", "tagline": "Predict. Prevent. Protect.",
-            "sim_time": STATE.timestamp.isoformat(),
-            "satellites": n_sats, "debris_tracked": n_debs,
+            "system": "AstraShield",
+            "status": "running",
+            "your_name": "Bhaskar",
+            "message": "I modified this API endpoint",
+            "satellites": n_sats,
+            "debris_tracked": n_debs,
             "cdm_warnings": STATE.cdm_warnings,
             "queued_maneuvers": len(STATE.maneuver_queue),
+        }
+    
+    @app.get("/api/hello")
+    def hello():
+        return {
+            "message": "Hello from AstraShield API",
+            "author": "Bhaskar",
+            "status": "working"
+        }
+    
+    from fastapi import Query
+
+    @app.get("/api/objects")
+    def get_objects(type: str = Query(None)):
+        objects_list = []
+
+        for oid, obj in STATE.objects.items():
+            if type and obj["type"] != type:
+                 continue
+
+            state = obj["state"]
+
+            objects_list.append({
+                "id": oid,
+                "type": obj["type"],
+                "position": {
+                    "x": state[0],
+                    "y": state[1],
+                    "z": state[2]
+                },
+                "velocity": {
+                    "vx": state[3],
+                    "vy": state[4],
+                    "vz": state[5]
+                },
+        })
+        
+
+        return {
+             "count": len(objects_list),
+            "objects": objects_list[:20]
+        }
+    @app.get("/api/object/{object_id}")
+    def get_object(object_id: str):
+        obj = STATE.objects.get(object_id)
+
+        if not obj:
+            return {"error": "Object not found"}
+
+        state = obj["state"]
+
+        return {
+            "id": object_id,
+            "type": obj["type"],
+            "position": {
+                "x": state[0],
+                "y": state[1],
+                "z": state[2]
+            },
+            "velocity": {
+                "vx": state[3],
+                "vy": state[4],
+                "vz": state[5]
+            }
         }
 
     if __name__ == "__main__":
