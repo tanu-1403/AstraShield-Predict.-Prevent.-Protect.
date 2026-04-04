@@ -274,7 +274,7 @@ else:
     def hello():
         return {
             "message": "Hello from AstraShield API",
-            "author": "Bhaskar",
+            "author": "Tanya",
             "status": "working"
         }
     
